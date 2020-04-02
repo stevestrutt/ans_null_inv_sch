@@ -3,7 +3,7 @@ resource "null_resource" "null01" {
     bastion_host = "${var.bastion_host}"
 
     #host = "52.116.140.31"
-    # host = "172.22.192.8"
+    host = var.target_hosts
     user = "root"
     #private_key = "${file("~/.ssh/ansible")}"
 
@@ -29,7 +29,7 @@ resource "null_resource" "null01" {
       }
 
       verbose = true
-      hosts   = ["${var.target_hosts}"]
+      #hosts   = ["${var.target_hosts}"]
     }
 
     ansible_ssh_settings {
@@ -42,7 +42,6 @@ resource "null_resource" "null01" {
 variable "ssh_private_key" {
   type        = string
   description = "private ssh key"
-  value       = "${file("~/.ssh/ansible")}"
 }
 
 variable "insecure_no_strict_host_key_checking" {
@@ -52,11 +51,11 @@ variable "insecure_no_strict_host_key_checking" {
 variable "bastion_host" {
   type        = string
   description = "Bastion host public IP address"
-  value       = "52.116.140.15"
+  default     = "52.116.140.15"
 }
 
 variable "target_hosts" {
   type        = string
   description = "List of private IP addresses of target hosts"
-  value       = "172.16.4.4"
+  default     = "172.16.4.4"
 }
