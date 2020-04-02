@@ -3,7 +3,6 @@ resource "null_resource" "null01" {
     bastion_host = "${var.bastion_host}"
 
     #host = "52.116.140.31"
-
     # host = "172.22.192.8"
     user = "root"
     #private_key = "${file("~/.ssh/ansible")}"
@@ -11,13 +10,14 @@ resource "null_resource" "null01" {
     private_key = "${var.ssh_private_key}"
   }
 
-  # provisioner "remote-exec" {
-  #   script = "list.sh"
-  # }
-
   triggers = {
     always_run = "${timestamp()}"
   }
+
+  provisioner "remote-exec" {
+    script = "ls -al"
+  }
+
   provisioner "ansible" {
     plays {
       playbook = {
@@ -30,20 +30,18 @@ resource "null_resource" "null01" {
 
       verbose = true
       hosts   = ["${var.target_hosts}"]
-      #inventory_file = "${path.module}/ansible-data/inventory"
     }
 
     ansible_ssh_settings {
       insecure_no_strict_host_key_checking = "${var.insecure_no_strict_host_key_checking}"
       connect_timeout_seconds              = 60
-
-      #ssh_args                             = "-o ControlPersist=30m -o ControlMaster=auto"
     }
   }
 }
 
 variable "ssh_private_key" {
   description = "private ssh key"
+  value       = "${file("~/.ssh/ansible")}"
 }
 
 variable "insecure_no_strict_host_key_checking" {
@@ -52,8 +50,10 @@ variable "insecure_no_strict_host_key_checking" {
 
 variable "bastion_host" {
   description = "Bastion host public IP address"
+  value       = "52.116.140.15"
 }
 
 variable "target_hosts" {
   description = "List of private IP addresses of target hosts"
+  value       = "172.16.4.4"
 }
