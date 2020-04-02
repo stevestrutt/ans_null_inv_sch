@@ -15,7 +15,9 @@ resource "null_resource" "null01" {
   }
 
   provisioner "remote-exec" {
-    script = "ls -al"
+    inline = [
+      "ls -al"
+    ]
   }
 
   provisioner "ansible" {
