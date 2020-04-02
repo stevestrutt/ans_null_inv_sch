@@ -40,7 +40,6 @@ resource "null_resource" "null01" {
 }
 
 variable "ssh_private_key" {
-  type        = string
   description = "private ssh key"
 }
 
@@ -49,13 +48,11 @@ variable "insecure_no_strict_host_key_checking" {
 }
 
 variable "bastion_host" {
-  type        = string
   description = "Bastion host public IP address"
   default     = "52.116.140.15"
 }
 
 variable "target_hosts" {
-  type        = string
   description = "List of private IP addresses of target hosts"
   default     = "172.16.4.4"
 }
