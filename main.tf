@@ -3,7 +3,7 @@ resource "null_resource" "null01" {
     bastion_host = "${var.bastion_host}"
 
     #host = "52.116.140.31"
-    host = var.target_hosts
+    host = "${var.target_hosts}"
     user = "root"
     #private_key = "${file("~/.ssh/ansible")}"
 
